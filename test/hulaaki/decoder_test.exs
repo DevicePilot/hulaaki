@@ -40,6 +40,10 @@ defmodule Hulaaki.DecoderTest do
     expected = {:partial, {268_435_455, ""}}
     received = Decoder.decode_remaining_length(<<255, 255, 255, 127>>)
     assert expected == received
+
+    expected = {:ok, {0, ""}}
+    received = Decoder.decode_remaining_length_test("", 0, 1)
+    assert expected == received
   end
 
   test "attempts to decode a connect message" do

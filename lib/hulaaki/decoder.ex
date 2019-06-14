@@ -87,6 +87,14 @@ defmodule Hulaaki.Decoder do
     end
   end
 
+  defp decode_remaining_length(_, 0, 1), do: {:ok, {0, ""}}
+
+  defp decode_remaining_length(_, _, _) do
+    {:error, :bad_decode}
+  end
+
+  def decode_remaining_length_test(_, 0, 1), do: {:ok, {0, ""}}
+
   defp decode_connect(<<_, from_second_byte::binary>> = payload_bytes) do
     case decode_remaining_length(from_second_byte) do
       {:ok, {length, from_third_byte}} ->
